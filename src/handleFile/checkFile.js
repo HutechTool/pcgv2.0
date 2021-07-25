@@ -5,10 +5,9 @@ function dicDuplicateMSSV(data3x) {
   const dicDuplicate = {};
   const dictionary = {};
   tenDoAn.forEach((loaiDoAn) => {
-    data3x[loaiDoAn].forEach((column) => {
-      const arrayValuesColumn = Object.values(column);
-      const MSSV = arrayValuesColumn[0];
-      column["Tên môn học"] = loaiDoAn;
+    data3x[loaiDoAn].forEach((row) => {
+      const MSSV = row.MSSV;
+      row["Tên môn học"] = loaiDoAn;
       if (dictionary[MSSV] !== undefined) {
         if (dicDuplicate[MSSV] === undefined) {
           dicDuplicate[MSSV] = [dictionary[MSSV]["Tên môn học"], loaiDoAn];
@@ -17,7 +16,7 @@ function dicDuplicateMSSV(data3x) {
         }
         count++;
       }
-      dictionary[MSSV] = column;
+      dictionary[MSSV] = row;
     });
   });
   return { count, dicDuplicate };
@@ -54,11 +53,10 @@ function rutGonTen(name) {
 function dictionary3xData(data3x) {
   const dictionary = {};
   tenDoAn.forEach((loaiDoAn) => {
-    data3x[loaiDoAn].forEach((column) => {
-      const arrayValuesColumn = Object.values(column);
-      const MSSV = arrayValuesColumn[0];
-      column["Tên môn học"] = loaiDoAn;
-      dictionary[MSSV] = column;
+    data3x[loaiDoAn].forEach((row) => {
+      const MSSV = row.MSSV;
+      row["Tên môn học"] = loaiDoAn;
+      dictionary[MSSV] = row;
     });
   });
   return dictionary;
@@ -66,9 +64,8 @@ function dictionary3xData(data3x) {
 
 function getArrayMSSVFrom1File(data) {
   const array = [];
-  data.forEach((column) => {
-    const arrayValuesColumn = Object.values(column);
-    const MSSV = arrayValuesColumn[0];
+  data.forEach((row) => {
+    const MSSV = row.MSSV;
     array.push(MSSV);
   });
   return array;
@@ -88,20 +85,22 @@ export function phanCongGiangVien(data3DoAn, dataPhanCong) {
     }
   });
   return {
-    Data3x: changeDicToData3x(dictionary3x, dictionaryDaPhanCong),
+    Data3x: changeDicToData3x(
+      PhanCongDoAnMoi(dictionary3x, dictionaryDaPhanCong)
+    ),
     Done: changeToDataDaPhanCong(dictionaryDaPhanCong, dictionary3x),
     Unassigned: changeToDataChuaPhanCong(dictionaryChuaPhanCong),
+    dicData3x: dictionary3x,
   };
 }
 
-function changeDicToData3x(dictionary3x, dictionaryDaPhanCong) {
+export function changeDicToData3x(dictionary3x) {
   const data3x = {
     [tenDoAn[0]]: [],
     [tenDoAn[1]]: [],
     [tenDoAn[2]]: [],
   };
-  const dicDaPhanCong = PhanCongDoAnMoi(dictionary3x, dictionaryDaPhanCong);
-  const arrSV = Object.values(dicDaPhanCong);
+  const arrSV = Object.values(dictionary3x);
 
   arrSV.forEach((sinhVien) => {
     switch (sinhVien["Tên môn học"]) {
@@ -120,6 +119,7 @@ function changeDicToData3x(dictionary3x, dictionaryDaPhanCong) {
   });
   return data3x;
 }
+// Lấy da danh sách sinh viên đã phân công
 function changeToDataDaPhanCong(dictionary, dicData) {
   const data = [];
   const arrayDic = Object.entries(dictionary);
@@ -141,7 +141,7 @@ function changeToDataChuaPhanCong(dictionary) {
   });
   return data;
 }
-
+// Phân công môn học mới cho học sinh có trong diction đã phân công
 function PhanCongDoAnMoi(dictionary3x, dictionaryDaPhanCong) {
   const arrayDicDaPhanCong = Object.entries(dictionaryDaPhanCong);
   arrayDicDaPhanCong.forEach(([MSSV, tenMonHoc]) => {

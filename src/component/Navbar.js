@@ -1,3 +1,5 @@
+import { screens } from "../handleFile/Variables";
+
 function Navbar({ changeMode }) {
   return (
     <nav
@@ -23,7 +25,7 @@ function Navbar({ changeMode }) {
             <li className="nav-item mx-0 mx-lg-1">
               <button
                 className="nav-link py-3 px-0 px-lg-3 rounded"
-                onClick={() => changeMode("checkFile")}
+                onClick={() => changeMode(screens.CheckFile)}
               >
                 Kiểm tra file
               </button>
@@ -31,9 +33,17 @@ function Navbar({ changeMode }) {
             <li className="nav-item mx-0 mx-lg-1">
               <button
                 className="nav-link py-3 px-0 px-lg-3 rounded"
-                onClick={() => changeMode("PhanCong")}
+                onClick={() => changeMode(screens.PhanCongGV)}
               >
                 Phân công giảng viên
+              </button>
+            </li>
+            <li className="nav-item mx-0 mx-lg-1">
+              <button
+                className="nav-link py-3 px-0 px-lg-3 rounded"
+                onClick={() => changeMode(screens.SaveFile)}
+              >
+                Lưu file
               </button>
             </li>
           </ul>

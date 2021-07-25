@@ -2,20 +2,19 @@ import React, { useEffect } from "react";
 
 import getFilePromise, { get3SemesterPromise } from "../promise/getFilePromise";
 import { phanCongGiangVien } from "../handleFile/checkFile";
-import Table from "./Table";
-import { ExportAllXLSX } from "./ExportButtonXLSX";
+import ResultPhanCong from "./ResultPhanCong";
 
-function CompareSemester() {
+function CompareInputFile() {
   const [data3DoAn, setData3DoAn] = React.useState(null);
   const [dataPhanCong, setDataPhanCong] = React.useState(null);
 
-  const [objectPhanCong, setlistPhanCong] = React.useState(null);
+  const [objectPhanCong, setObjectPhanCong] = React.useState(null);
 
   useEffect(() => {
-    setlistPhanCong(null);
+    setObjectPhanCong(null);
     if (!data3DoAn || !dataPhanCong?.length) return;
     const phanCong = phanCongGiangVien(data3DoAn, dataPhanCong);
-    setlistPhanCong(phanCong);
+    setObjectPhanCong(phanCong);
   }, [data3DoAn, dataPhanCong]);
 
   const handleChange3DoAn = async (event) => {
@@ -36,7 +35,8 @@ function CompareSemester() {
   return (
     <section className="masthead bg-primary text-white text-center min-vh-100">
       <div className="container d-flex align-items-center flex-column">
-        <h1 className="mb-4 heading-text">Phân công giảng viên</h1>
+        <h1 className="mb-3 heading-text">Nhập bằng file</h1>
+        <h4 className="mb-5">Phân công bằng cách chọn file tải lên</h4>
         <div className="row">
           <div className="col">
             <h5 className="mb-1 sub-text">Chọn dữ liệu đồ án</h5>
@@ -57,40 +57,10 @@ function CompareSemester() {
             />
           </div>
         </div>
-        <div className="mt-3">
-          {
-            objectPhanCong ? (
-              <>
-                <h5 className="mb-1">Xuất tất cả file</h5>
-                <ExportAllXLSX
-                  csvData={objectPhanCong.Data3x || {}}
-                  fileName="Đồ án đã phân công"
-                />
-                <div className="mt-3">
-                  <Table
-                    titleTable="Sinh viên được phân công"
-                    data={objectPhanCong.Done || []}
-                  />
-                </div>
-                <div className="mt-3">
-                  <Table
-                    titleTable="Sinh viên chưa được phân công"
-                    data={objectPhanCong.Unassigned || []}
-                  />
-                </div>
-              </>
-            ) : null
-            // <>
-            //   <Table titleTable="Sinh viên được phân công" data={[]} />
-            //   <div className="mt-3">
-            //     <Table titleTable="Sinh viên chưa được phân công" data={[]} />
-            //   </div>
-            // </>
-          }
-        </div>
+        <ResultPhanCong objectPhanCong={objectPhanCong} />
       </div>
     </section>
   );
 }
 
-export default CompareSemester;
+export default CompareInputFile;

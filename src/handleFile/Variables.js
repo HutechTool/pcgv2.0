@@ -3,6 +3,17 @@ export const tenDoAn = [
   "Đồ án chuyên ngành công nghệ thông tin",
   "Đồ án tổng hợp công nghệ thông tin",
 ];
+export const screens = {
+  CheckFile: "CheckFile",
+  PhanCongGV: "PhanCongGV",
+  SaveFile: "SaveFile",
+};
+export const modes = {
+  One: "Một học kỳ",
+  Many: "Nhiều học kỳ",
+  File: "Nhập bằng file",
+};
+
 export function tangDoAn(DoAn) {
   switch (DoAn) {
     case tenDoAn[0]:

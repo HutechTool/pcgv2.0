@@ -32,9 +32,9 @@ export const ExportAllXLSX = ({ csvData, fileName }) => {
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
   const fileExtension = ".xlsx";
   const exportToCSV = (csvData, fileName) => {
-    const ws1 = XLSX.utils.json_to_sheet(csvData[tenDoAn[0]]);
-    const ws2 = XLSX.utils.json_to_sheet(csvData[tenDoAn[1]]);
-    const ws3 = XLSX.utils.json_to_sheet(csvData[tenDoAn[2]]);
+    const ws1 = XLSX.utils.json_to_sheet(createSortObject(csvData[tenDoAn[0]]));
+    const ws2 = XLSX.utils.json_to_sheet(createSortObject(csvData[tenDoAn[1]]));
+    const ws3 = XLSX.utils.json_to_sheet(createSortObject(csvData[tenDoAn[2]]));
 
     const wb = {
       Sheets: {
@@ -58,3 +58,21 @@ export const ExportAllXLSX = ({ csvData, fileName }) => {
     </button>
   );
 };
+function createSortObject(csvData) {
+  const data = [];
+  csvData.forEach((row) => {
+    const newObject = {
+      MSSV: row.MSSV,
+      "Họ và tên": row["Họ và tên"],
+      "Ngày sinh": row["Ngày sinh"],
+      "Mã lớp": row["Mã lớp"],
+      "Mã MH": row["Mã MH"],
+      Nhóm: row["Nhóm"],
+      "Tên môn học": row["Tên môn học"],
+      "Lớp nhom": row["Lớp nhom"],
+      GVHD: row["GVHD"],
+    };
+    data.push(newObject);
+  });
+  return data;
+}
