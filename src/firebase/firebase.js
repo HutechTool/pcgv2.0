@@ -2,14 +2,12 @@ import firebase from "firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBSCyRekovkDRBn2kuUSDhIYw1_bfczsV8",
-  authDomain: "phanconggiangvien.firebaseapp.com",
-  databaseURL:
-    "https://phanconggiangvien-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "phanconggiangvien",
-  storageBucket: "phanconggiangvien.appspot.com",
-  messagingSenderId: "153075433107",
-  appId: "1:153075433107:web:6993e6b2fb38b44cf85766",
+  apiKey: "AIzaSyAl2Qe9iji_0Wx7Ld7DHkuWfNJSPSYCNvE",
+  authDomain: "pvgv-bf864.firebaseapp.com",
+  projectId: "pvgv-bf864",
+  storageBucket: "pvgv-bf864.appspot.com",
+  messagingSenderId: "17940044360",
+  appId: "1:17940044360:web:f9123e897cd60477c6d67d",
 };
 
 firebase.initializeApp(firebaseConfig);
